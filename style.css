@@ -1,0 +1,23 @@
+button.active{
+	color: salmon;
+}
+button:disabled.active{
+	color: grey;
+}
+button {
+	border:none;
+	padding: 5px;
+	background-color: lightgray;
+}
+
+#soundToLoad {
+	display: none;
+}
+
+.slider-group {
+	display: none
+}
+
+.slider-group.visible {
+	display: block
+}

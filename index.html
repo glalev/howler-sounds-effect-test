@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="style.css">
+    <title>Test</title>
+</head>
+
+	<body>
+
+	<p>Loaded File: <span id="soundName"></span><p>
+	<button id="play-btn" onclick="soundPlay()" disabled title="play"><i class="actie fa fa-play"></i></button>
+	<button id="stop-btn" onclick="soundStop()" disabled title="stop"><i class="fa fa-stop"></i></button>
+	<button id="loop-btn" class="active" onclick="toggleLoop()" disabled title="loop"><i class="fa fa-undo"></i></button>
+	<button id="add-btn" onclick="addSound()" title="add"><i class="fa fa-plus"></i></button>
+	<input id="soundToLoad" onchange="newSoundHandle()" type="file"><br><br>
+	<span>Speed </span><input id='playback-slider' type="range" min="0.2" max="4" value="1" step="0.1" oninput="setPlaybackSpeed()" style='width: 150px'><span id='playback-speed'>1</span><br>
+  <span>Left </span><input id='balance-slider' style="margin-left: 15px; width: 150px" type="range" min="-1" max="1" value="0" step="0.1" oninput="setBalance()"><span>Rirght</span>
+	<hr>
+
+  <span>select effect:</span>
+  <select id="effects" onchange="addEffect(event)">
+    <option value="none">none</option>
+    <option value="Chorus">Chorus</option>
+    <option value="Filter">Filter</option>
+  </select>
+
+  <div id="effects-controls">
+      <div id="Chorus" class="slider-group" onchange="effectChanged(event)">
+        	<span class="label">rate: </span><input class="input" data-name='rate' type="range" min="0.01" max="8" value="1.5" step="0.01"><span class="value">1.5</span><br>
+        	<span class="label">feedback: </span><input class="input" data-name='feedback' type="range" min="0" max="1" value="0.2" step="0.1"><span class="value">0.2</span><br>
+        	<span class="label">delay: </span><input class="input" data-name='delay' type="range" min="0" max="1" value="0.0045" step="0.01"><span class="value">0.0045</span><br>
+      </div>
+
+      <div id="Filter" class="slider-group" oninput="effectChanged(event)">
+        	<span class="label">frequency: </span><input class="input" data-name='frequency' type="range" min="20" max="22050" value="440" step="10"><span class="value">440</span><br>
+        	<span class="label">Q: </span><input class="input" data-name='Q' type="range" min="0.001" max="100" value="1" step="0.001"><span class="value">1</span><br>
+        	<span class="label">gain: </span><input class="input" data-name='gain' type="range" min="-40" max="40" value="0" step="1"><span class="value">0</span><br>
+        	<input class="input" data-name='filterType' type="radio" name="filterType" value="lowpass"><span class="value">lowpass</span>
+        	<input class="input" data-name='filterType' type="radio" name="filterType" value="highpass"><span class="value">highpass</span>
+        	<input class="input" data-name='filterType' type="radio" name="filterType" value="bandpass"><span class="value">bandpass</span>
+        	<input class="input" data-name='filterType' type="radio" name="filterType" value="lowshelf"><span class="value">lowshelf</span>
+        	<input class="input" data-name='filterType' type="radio" name="filterType" value="highshelf"><span class="value">highshelf</span>
+        	<input class="input" data-name='filterType' type="radio" name="filterType" value="peaking"><span class="value">peaking</span>
+        	<input class="input" data-name='filterType' type="radio" name="filterType" value="notch"><span class="value">notch</span>
+        	<input class="input" data-name='filterType' type="radio" name="filterType" value="allpass"><span class="value">allpass</span>
+          <br>
+      </div>
+  </div>
+	<!-- <p>File to play at the end of the sound:</p>
+	<input id='soundToLoadOnEnd' onchange="addEndHandler()" type="file"> -->
+
+	<!-- <script type="text/javascript" src='https://code.jquery.com/jquery-2.1.4.min.js'></script> -->
+	<!-- <script type="text/javascript" src='howler/howler-2.0.0.js'></script>
+	<script type="text/javascript" src='howler/howler.dopamine.effects.js'></script>
+	<script type="text/javascript" src='howler/howler-2.0.0.loop.ieFix.js'></script> -->
+	<!-- <script type="text/javascript" src='sound_test.js'></script> -->
+	<script type="text/javascript" src='howler/howler.min.js'></script>
+	<script type="text/javascript" src='howler/howler.spatial.min.js'></script>
+	<script type="text/javascript" src='howler/howler-plugin-effects-chain.js'></script>
+	<script type="text/javascript" src='howler/tuna.js'></script>
+	<script type="text/javascript" src='index.js'></script>
+	</body>
+</html>
