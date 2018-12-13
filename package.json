@@ -17,6 +17,11 @@
   },
   "homepage": "https://github.com/glalev/howler-sounds-effect-test#readme",
   "dependencies": {
+    "howler": "^2.1.0",
+    "tunajs": "^1.0.2"
+  },
+  "devDependencies": {
+    "handlebars": "^4.0.12",
     "@babel/cli": "^7.2.0",
     "@babel/core": "^7.2.0",
     "@babel/preset-env": "^7.2.0",
@@ -25,6 +30,6 @@
     "grunt-browserify": "^5.3.0",
     "grunt-contrib-uglify": "^4.0.0",
     "grunt-contrib-watch": "^1.1.0",
-    "howler": "^2.1.0"
+    "hbsfy": "^2.8.1"
   }
 }

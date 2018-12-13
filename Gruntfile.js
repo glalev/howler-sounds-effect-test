@@ -3,10 +3,10 @@ module.exports = function (grunt) {
     browserify: {
       dist: {
         options: {
+          watch: true,
           transform: [
-            ['babelify', {
-              // loose: 'all'
-            }]
+            ['hbsfy', {'extensions': ['hbs']}],
+            ['babelify', {presets: ['@babel/preset-env'], plugins: []}],
           ]
         },
         files: {
@@ -26,7 +26,7 @@ module.exports = function (grunt) {
     },
     watch: {
       scripts: {
-        files: 'src/js/**/*.js',
+        files: ['src/js/**/*.js', 'src/templates/*.hbs'],
         tasks: ['browserify']
       }
     }
