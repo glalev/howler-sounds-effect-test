@@ -1,5 +1,5 @@
 <div id="{{name}}" class="slider-group" onchange="app.changeEffect(event)">
     {{#each inputs}}
-      {{getInput this}}
+      {{getInput @key this}}
     {{/each}}
 </div>

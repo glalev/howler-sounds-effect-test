@@ -1,3 +1,9 @@
+body {
+	background-color: #252525;
+	color: white;
+	font-family: "Helvetica";
+}
+
 button.active{
 	color: salmon;
 }
@@ -14,6 +20,12 @@ button {
 	display: none;
 }
 
+#effects-selector {
+	display: none;
+}
+#effects-selector.active {
+	display: inline-block;
+}
 /* .slider-group {
 	display: none
 }

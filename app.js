@@ -6601,6 +6601,7 @@ function () {
       _Sounds.default.load(name);
 
       this.info.soundName.innerHTML = name;
+      this.inputs.effectsSelector.classList.add('active');
 
       this._toggleButton(['play', 'stop', 'loop'], true);
     }
@@ -6650,9 +6651,8 @@ function () {
       sound && sound.stereo(balance);
     }
   }, {
-    key: "addEffect",
-    value: function addEffect(e) {
-      // todo applay effect
+    key: "applyEffect",
+    value: function applyEffect(e) {
       var name = e.currentTarget.value;
       var effect = this.effects[name];
       this.inputs.effects.innerHTML = '';
@@ -6729,7 +6729,6 @@ var Config = {
       inputs: {
         rate: {
           type: 'range',
-          name: 'rate',
           min: 0.01,
           max: 8,
           step: 0.01,
@@ -6737,7 +6736,6 @@ var Config = {
         },
         feedback: {
           type: 'range',
-          name: 'feedback',
           min: 0,
           max: 1,
           step: 0.1,
@@ -6745,7 +6743,6 @@ var Config = {
         },
         delay: {
           type: 'range',
-          name: 'delay',
           min: 0,
           max: 1,
           step: 0.01,
@@ -6768,7 +6765,6 @@ var Config = {
       inputs: {
         frequency: {
           type: 'range',
-          name: 'frequency',
           min: 20,
           max: 22050,
           step: 10,
@@ -6776,7 +6772,6 @@ var Config = {
         },
         Q: {
           type: 'range',
-          name: 'Q',
           min: 0.001,
           max: 100,
           step: 0.01,
@@ -6784,7 +6779,6 @@ var Config = {
         },
         gain: {
           type: 'range',
-          name: 'gain',
           min: -40,
           max: 40,
           step: 1,
@@ -6793,7 +6787,6 @@ var Config = {
         filterType: {
           type: 'radio',
           label: 'filter type',
-          name: 'filterType',
           values: ['lowpass', 'highpass', 'bandpass', 'lowshelf', 'highshelf', 'peaking', 'notch', 'allpass']
         }
       }
@@ -6814,7 +6807,6 @@ var Config = {
       inputs: {
         feedback: {
           type: 'range',
-          name: 'feedback',
           min: 0,
           max: 1,
           step: 0.01,
@@ -6822,7 +6814,6 @@ var Config = {
         },
         delayTime: {
           type: 'range',
-          name: 'delayTime',
           min: 1,
           max: 10000,
           step: 10,
@@ -6830,7 +6821,6 @@ var Config = {
         },
         wetLevel: {
           type: 'range',
-          name: 'wetLevel',
           min: 0,
           max: 1,
           step: 0.01,
@@ -6838,7 +6828,6 @@ var Config = {
         },
         dryLevel: {
           type: 'range',
-          name: 'dryLevel',
           min: 0,
           max: 1,
           step: 0.01,
@@ -6846,7 +6835,6 @@ var Config = {
         },
         cutoff: {
           type: 'range',
-          name: 'cutoff',
           min: 20,
           max: 22050,
           step: 10,
@@ -6962,29 +6950,30 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var helpers = function helpers() {
   // todo handle the name better
-  _runtime.default.registerHelper('getInput', function (options) {
-    if (options.type === 'range') return _buildRange(options);
-    if (options.type === 'radio') return _buildRadio(options);
+  _runtime.default.registerHelper('getInput', function (name, options) {
+    if (options.type === 'range') return _buildRange(name, options);
+    if (options.type === 'radio') return _buildRadio(name, options);
+    return '';
   });
 };
 
-var _buildRange = function _buildRange(_ref) {
-  var name = _ref.name,
-      min = _ref.min,
+var _buildRange = function _buildRange(name, _ref) {
+  var min = _ref.min,
       max = _ref.max,
       step = _ref.step,
       value = _ref.value,
       label = _ref.label;
+  console.log(name);
   var str = "\n  <span class=\"label\">".concat(label || name, "</span>\n  <input class=\"effect-input\" type=\"range\" name=\"").concat(name, "\" min=\"").concat(min, "\" max=\"").concat(max, "\" step=\"").concat(step, "\" value=\"").concat(value, "\" />\n  <span class=\"").concat(name, " effect-label\">").concat(value, "</span>\n  <br>\n  ");
   return new _runtime.default.SafeString(str);
 };
 
-var _buildRadio = function _buildRadio(_ref2) {
-  var name = _ref2.name,
+var _buildRadio = function _buildRadio(name, _ref2) {
+  var label = _ref2.label,
       values = _ref2.values;
   var str = values.reduce(function (acc, value, i) {
     return acc + "<input class=\"effect-input\" ".concat(i === 0 ? 'checked' : '', " type=\"radio\" name=\"").concat(name, "\" value=\"").concat(value, "\"><span class=\"value\">").concat(value, "</span>");
-  }, '');
+  }, "".concat(label || name));
   return new _runtime.default.SafeString(str);
 };
 
@@ -7037,17 +7026,17 @@ var HandlebarsCompiler = require('hbsfy/runtime');
 module.exports = HandlebarsCompiler.template({"1":function(container,depth0,helpers,partials,data) {
     var helper, alias1=depth0 != null ? depth0 : (container.nullContext || {}), alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
 
-  return "    <option value=\""
+  return "      <option value=\""
     + alias4(((helper = (helper = helpers.key || (data && data.key)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"key","hash":{},"data":data}) : helper)))
     + "\">"
     + alias4(((helper = (helper = helpers.key || (data && data.key)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"key","hash":{},"data":data}) : helper)))
-    + "</option>\r\n";
+    + "</option>\n";
 },"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
     var stack1;
 
-  return "<p>Loaded File: <span id=\"soundName\"></span><p>\r\n<button id=\"play-btn\" onclick=\"app.playSound()\" disabled title=\"play\"><i class=\"actie fa fa-play\"></i></button>\r\n<button id=\"stop-btn\" onclick=\"app.stopSound()\" disabled title=\"stop\"><i class=\"fa fa-stop\"></i></button>\r\n<button id=\"loop-btn\" class=\"active\" onclick=\"app.toggleSoundLoop()\" disabled title=\"loop\"><i class=\"fa fa-undo\"></i></button>\r\n<button id=\"add-btn\" onclick=\"app.addSound()\" title=\"add\"><i class=\"fa fa-plus\"></i></button>\r\n<input id=\"soundToLoad\" onchange=\"app.loadSound()\" type=\"file\"><br><br>\r\n<span>Speed </span><input id='playback-slider' type=\"range\" min=\"0.2\" max=\"4\" value=\"1\" step=\"0.1\" oninput=\"app.setPlaybackSpeed()\" style='width: 150px'><span id='playback-speed'>1</span><br>\r\n<span>Left </span><input id='balance-slider' style=\"margin-left: 15px; width: 150px\" type=\"range\" min=\"-1\" max=\"1\" value=\"0\" step=\"0.1\" oninput=\"app.setBalance()\"><span>Rirght</span>\r\n<hr>\r\n\r\n<span>select effect:</span>\r\n<select id=\"effects-selector\" onchange=\"app.addEffect(event)\">\r\n  <option value=\"none\">none</option>\r\n"
+  return "<p>Loaded File: <span id=\"soundName\"></span><p>\n<button id=\"play-btn\" onclick=\"app.playSound()\" disabled title=\"play\"><i class=\"actie fa fa-play\"></i></button>\n<button id=\"stop-btn\" onclick=\"app.stopSound()\" disabled title=\"stop\"><i class=\"fa fa-stop\"></i></button>\n<button id=\"loop-btn\" class=\"active\" onclick=\"app.toggleSoundLoop()\" disabled title=\"loop\"><i class=\"fa fa-undo\"></i></button>\n<button id=\"add-btn\" onclick=\"app.addSound()\" title=\"add\"><i class=\"fa fa-plus\"></i></button>\n<input id=\"soundToLoad\" onchange=\"app.loadSound()\" type=\"file\"><br><br>\n<span>Speed </span><input id='playback-slider' type=\"range\" min=\"0.2\" max=\"4\" value=\"1\" step=\"0.1\" oninput=\"app.setPlaybackSpeed()\" style='width: 150px'><span id='playback-speed'>1</span><br>\n<span>Left </span><input id='balance-slider' style=\"margin-left: 15px; width: 150px\" type=\"range\" min=\"-1\" max=\"1\" value=\"0\" step=\"0.1\" oninput=\"app.setBalance()\"><span>Rirght</span>\n<hr>\n\n<div id=\"effects-selector\">\n  <span>select effect:</span>\n  <select onchange=\"app.applyEffect(event)\">\n    <option value=\"none\">none</option>\n"
     + ((stack1 = helpers.each.call(depth0 != null ? depth0 : (container.nullContext || {}),(depth0 != null ? depth0.effects : depth0),{"name":"each","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
-    + "</select>\r\n\r\n<div id=\"effects\">\r\n\r\n\r\n</div>";
+    + "  </select>\n\n  <div id=\"effects\"></div>\n</div>\n";
 },"useData":true});
 
 },{"hbsfy/runtime":20}],30:[function(require,module,exports){
@@ -7055,16 +7044,16 @@ module.exports = HandlebarsCompiler.template({"1":function(container,depth0,help
 var HandlebarsCompiler = require('hbsfy/runtime');
 module.exports = HandlebarsCompiler.template({"1":function(container,depth0,helpers,partials,data) {
     return "      "
-    + container.escapeExpression((helpers.getInput || (depth0 && depth0.getInput) || helpers.helperMissing).call(depth0 != null ? depth0 : (container.nullContext || {}),depth0,{"name":"getInput","hash":{},"data":data}))
-    + "\r\n";
+    + container.escapeExpression((helpers.getInput || (depth0 && depth0.getInput) || helpers.helperMissing).call(depth0 != null ? depth0 : (container.nullContext || {}),(data && data.key),depth0,{"name":"getInput","hash":{},"data":data}))
+    + "\n";
 },"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
     var stack1, helper, alias1=depth0 != null ? depth0 : (container.nullContext || {});
 
   return "<div id=\""
     + container.escapeExpression(((helper = (helper = helpers.name || (depth0 != null ? depth0.name : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(alias1,{"name":"name","hash":{},"data":data}) : helper)))
-    + "\" class=\"slider-group\" onchange=\"app.changeEffect(event)\">\r\n"
+    + "\" class=\"slider-group\" onchange=\"app.changeEffect(event)\">\n"
     + ((stack1 = helpers.each.call(alias1,(depth0 != null ? depth0.inputs : depth0),{"name":"each","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
-    + "</div>";
+    + "</div>\n";
 },"useData":true});
 
 },{"hbsfy/runtime":20}]},{},[23]);

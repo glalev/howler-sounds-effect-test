@@ -1,4 +1,4 @@
-import {Howl, Howler} from 'howler';
+import { Howl, Howler } from 'howler';
 import howlerMixins from './howler-mixins.js';
 import handlebarsHelpers from './handlebars-helpers.js';
 
@@ -52,6 +52,7 @@ class App {
     Sounds.load(name);
 
     this.info.soundName.innerHTML = name;
+    this.inputs.effectsSelector.classList.add('active');
     this._toggleButton(['play', 'stop', 'loop'], true);
   }
 
@@ -95,7 +96,7 @@ class App {
     sound && sound.stereo(balance);
   }
 
-  addEffect(e) { // todo applay effect
+  applyEffect(e) {
     const name = e.currentTarget.value;
     const effect = this.effects[name];
 
